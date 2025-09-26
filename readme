@@ -12,22 +12,17 @@ Al finalizar la carrera, los resultados se ordenan automáticamente en función 
 Para compilar el proyecto necesitas tener instalado **g++** (parte de [MinGW](http://mingw.org/) en Windows o [GCC](https://gcc.gnu.org/) en Linux/macOS).
 
 ### Windows
-```bash
 g++ -Iincludes sources/*.cpp -o carrera.exe
 .\carrera.exe
-```
 
 ### Linux
-```bash
 g++ -Iincludes sources/*.cpp -o carrera
 ./carrera
-```
 
 ### MacOS
-```bash
 g++ -Iincludes sources/*.cpp -o carrera
 ./carrera
-```
+
 
 ### Primer avance
 
