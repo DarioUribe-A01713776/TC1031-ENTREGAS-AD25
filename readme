@@ -85,6 +85,3 @@ Para organizar la parrilla en función del tiempo de carrera, se implementa el a
 
 ### ¿Qué sigue?  
 Me gustaría hacer la simulación más realista incorporando nuevas características, como la inclusión de un Safety Car, la posibilidad de mostrar las posiciones vuelta por vuelta en lugar de solo al final, y mejorar el formato de salida para que los resultados sean más claros y atractivos visualmente.
-
-
-
