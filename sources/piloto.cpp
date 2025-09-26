@@ -1,11 +1,15 @@
-// piloto.cpp
+// monoplaza.h
+// Autor: Darío A. Uribe
+
+/*
+    Sencillo y básico en el que se definen los getters de la clase Piloto. 
+*/
+
 #include "piloto.h"
 
-// Constructor
 Piloto::Piloto(string nom, string dor, int hab, int prob)
     : nombre(nom), dorsal(dor), habilidad(hab), probError(prob) {}
 
-// Métodos getters
 string Piloto::getNombre() const {
     return nombre;
 }

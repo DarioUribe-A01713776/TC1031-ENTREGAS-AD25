@@ -1,6 +1,23 @@
 // monoplaza.h
 // Autor: Darío A. Uribe
 
+/*
+En este archivo se define la clase Monoplaza, que representa de forma general
+a un auto de Fórmula 1. La clase incluye atributos como escudería, piloto,
+velocidad, fiabilidad y tiempo de carrera, esta clase la hice para diferencias coches, y hacer la
+simulacion mas real, ya que en los monoplazas de la F1 no todos son iguales. 
+
+El atributo piloto proviene de la clase Piloto, lo que permite asociar cada
+monoplaza con un conductor específico.
+
+A partir de esta clase base se derivan las clases hijas, que corresponden a
+cada escudería de la parrilla actual de la F1. 
+
+Además, se declaran métodos virtuales como correr, los cuales son
+sobrescritos por las clases hijas para simular el comportamiento de cada
+escudería durante la carrera.
+*/
+
 #ifndef MONOPLAZA_H
 #define MONOPLAZA_H
 

@@ -7,6 +7,16 @@
 #include <ctime>
 #include <iostream>
 
+/*
+En este archivo se implementa el cálculo del tiempo de carrera. 
+La fórmula utilizada toma en cuenta los distintos atributos del monoplaza, 
+los cuales influyen directamente en el resultado final. 
+
+El valor de referencia para el tiempo base se obtuvo a partir del registro
+marcado por Max Verstappen en el último Gran Premio al momento de desarrollar
+este proyecto.
+*/
+
 Monoplaza::Monoplaza(string esc, Piloto pil, int vel, int fiab)
     : escuderia(esc), piloto(pil), velocidad(vel), fiabilidad(fiab), tiempoCarrera(0) {}
 
@@ -20,7 +30,6 @@ int Monoplaza::getTiempoCarrera() const {
 }
 
 
-// ---- Escuderías ----
 Sauber::Sauber(Piloto pil) : Monoplaza("Sauber", pil, 92, 75) {}
 void Sauber::correr() {
     tiempoCarrera = 5400 - velocidad + (rand() % 15) - (fiabilidad / 25);

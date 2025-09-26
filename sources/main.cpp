@@ -10,6 +10,35 @@
 
 using namespace std;
 
+
+/*
+En este programa se utiliza el algoritmo de ordenamiento MergeSort para organizar
+los resultados de la carrera de Fórmula 1. La idea principal es ordenar el vector
+de monoplazas (parrilla) en función de su tiempo de carrera, de menor a mayor.
+
+MergeSort es un algoritmo de tipo "divide y vencerás". Su funcionamiento se basa en:
+1. Dividir el arreglo en dos mitades recursivamente hasta obtener subarreglos de tamaño 1.
+2. Una vez que se llega a ese punto, se comienza a combinar (merge) los subarreglos 
+   de manera ordenada comparando elemento por elemento.
+3. En el caso de este proyecto, la comparación se hace mediante el atributo 
+   tiempoCarrera de cada monoplaza.
+
+La función merge recibe dos subarreglos ya ordenados y los une en un único arreglo 
+ordenado. El menor de los dos se coloca en la posición actual del arreglo original, este proceso 
+se repite hasta que todos los elementos han sido insertados en orden.
+
+De esta manera, al final de todas las combinaciones, el vector parrilla queda
+completamente ordenado, representando los resultados de la carrera desde el primer
+puesto hasta el último.
+
+En cuanto a la eficiencia:
+- Complejidad temporal: O(n log n), ya que en cada nivel de recursión se hacen n 
+  comparaciones y hay log n niveles de división.
+- Complejidad espacial: O(n), debido al uso de arreglos temporales L y R en el merge.
+
+*/
+
+
 void merge(vector<Monoplaza*>& arr, int izquierda, int medio, int derecha) {
     int n1 = medio - izquierda + 1;
     int n2 = derecha - medio;
@@ -57,6 +86,14 @@ void mergeSort(vector<Monoplaza*>& arr, int izquierda, int derecha) {
     }
 }
 
+
+// La funcion o flujo si se puede llamar asi es el siguiente: 
+// 1. Se inicializan los pilotos con sus atributos.
+// 2. Se crean las escuderías (monoplazas) asignando a cada una un piloto.
+// 3. Se construye la parrilla de salida en un vector.
+// 4. Cada monoplaza ejecuta el método "correr()" para simular su tiempo de carrera.
+// 5. Se ordena la parrilla con MergeSort de menor a mayor tiempo.
+// 6. Se muestran los resultados de la carrera en consola.
 
 int main() {
 
