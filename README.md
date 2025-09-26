@@ -1,7 +1,7 @@
 # Simulación de Carrera de Fórmula 1 🏎️
 **Autor:** Darío A. Uribe  
 
-El proyecto consiste en la simulación de un Gran Premio de Fórmula 1 (F1), utilizando la parrilla de la temporada 2025 (sin la participación de Checo Pérez 😢).
+El proyecto consiste en la simulación de un Gran Premio de Fórmula 1 (F1), utilizando la parrilla de la temporada 2025 (sin la participación de Checo Pérez :( ).
 Durante la simulación, cada piloto compite con su respectivo monoplaza, cuyos atributos de rendimiento y fiabilidad permiten diferenciar a cada escudería y piloto, añadiendo realismo.
 
 Al finalizar la carrera, los resultados se ordenan automáticamente en función del desempeño simulado, mostrando la clasificación final de manera similar a un GP real. 
@@ -58,16 +58,7 @@ Se modelan **monoplazas** y **pilotos**, y se aplica un algoritmo de ordenamient
 ## Algoritmo de Ordenamiento: MergeSort
 
 Para organizar la parrilla en función del tiempo de carrera, se implementa el algoritmo **MergeSort**, uno de los más eficientes y ampliamente utilizados en informática.  
-
-### ¿Cómo funciona?
-1. **Divide y vencerás**  
-   El arreglo de monoplazas se divide recursivamente en mitades hasta obtener subarreglos de un solo elemento.  
-
-2. **Combinación ordenada (Merge)**  
-   La función `merge()` compara dos subarreglos ya ordenados y los une en uno solo, eligiendo siempre el monoplaza con menor tiempo de carrera.  
-
-3. **Resultado final**  
-   Una vez que todas las divisiones se combinan, el vector queda completamente ordenado, mostrando la clasificación de la carrera desde el primer lugar hasta el último.  
+El arreglo de monoplazas se separa recursivamente en mitades cada vez más pequeñas hasta llegar a subarreglos que contienen solo un elemento. Cuando ya se tienen esas piezas mínimas, entra en acción la función merge(), que se encarga de comparar los tiempos de carrera entre dos grupos y unirlos en un nuevo subarreglo, siempre colocando primero al monoplaza con menor tiempo. Al repetir este procedimiento con todas las divisiones, poco a poco el arreglo original se reconstruye pero ya ordenado. El resultado final es la clasificación completa de la carrera, mostrando a cada piloto en el lugar que le corresponde, desde el primero hasta el último. El algoritmo no lo implementé tal cual lo vimos en clase, pero sí lo tomé como base.
 
 ### Complejidad del algoritmo
 - **Tiempo:**  
