@@ -57,7 +57,7 @@ Se modelan **monoplazas** y **pilotos**, y se aplica un algoritmo de ordenamient
 
 ## Algoritmo de Ordenamiento: MergeSort
 
-Para organizar la parrilla en función del tiempo de carrera, se implementa el algoritmo **MergeSort**, uno de los más eficientes y ampliamente utilizados en informática.  
+Para organizar la parrilla en función del tiempo de carrera, se implementa el algoritmo MergeSort, uno de los más eficientes.  
 El arreglo de monoplazas se separa recursivamente en mitades cada vez más pequeñas hasta llegar a subarreglos que contienen solo un elemento. Cuando ya se tienen esas piezas mínimas, entra en acción la función merge(), que se encarga de comparar los tiempos de carrera entre dos grupos y unirlos en un nuevo subarreglo, siempre colocando primero al monoplaza con menor tiempo. Al repetir este procedimiento con todas las divisiones, poco a poco el arreglo original se reconstruye pero ya ordenado. El resultado final es la clasificación completa de la carrera, mostrando a cada piloto en el lugar que le corresponde, desde el primero hasta el último. El algoritmo no lo implementé tal cual lo vimos en clase, pero sí lo tomé como base.
 
 ### Complejidad del algoritmo
