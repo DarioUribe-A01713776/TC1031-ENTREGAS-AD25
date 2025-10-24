@@ -5,39 +5,61 @@
 #include <vector>
 #include <algorithm>
 #include <ctime>
+#include <fstream>
+#include <sstream>
 #include "monoplaza.h"
 #include "piloto.h"
+#include "ListaDoble.h"
 
 using namespace std;
 
-
 /*
-En este programa se utiliza el algoritmo de ordenamiento MergeSort para organizar
-los resultados de la carrera de Fórmula 1. La idea principal es ordenar el vector
-de monoplazas (parrilla) en función de su tiempo de carrera, de menor a mayor.
+AVANCE 2: Mejoras implementadas
+1. Carga de datos desde archivo CSV
+2. Uso de lista doblemente ligada en lugar de vector (Ocupo el vector para ordernar y cargar los datos, 
+pero depues los implemento en la double linked list
+datos los  en la linked double list)
+3. Programa interactivo con selección de piloto y vueltas
 
-MergeSort es un algoritmo de tipo "divide y vencerás". Su funcionamiento se basa en:
-1. Dividir el arreglo en dos mitades recursivamente hasta obtener subarreglos de tamaño 1.
-2. Una vez que se llega a ese punto, se comienza a combinar (merge) los subarreglos 
-   de manera ordenada comparando elemento por elemento.
-3. En el caso de este proyecto, la comparación se hace mediante el atributo 
-   tiempoCarrera de cada monoplaza.
-
-La función merge recibe dos subarreglos ya ordenados y los une en un único arreglo 
-ordenado. El menor de los dos se coloca en la posición actual del arreglo original, este proceso 
-se repite hasta que todos los elementos han sido insertados en orden.
-
-De esta manera, al final de todas las combinaciones, el vector parrilla queda
-completamente ordenado, representando los resultados de la carrera desde el primer
-puesto hasta el último.
-
-En cuanto a la eficiencia:
-- Complejidad temporal: O(n log n), ya que en cada nivel de recursión se hacen n 
-  comparaciones y hay log n niveles de división.
-- Complejidad espacial: O(n), debido al uso de arreglos temporales L y R en el merge.
-
+El algoritmo MergeSort se mantiene para ordenar los resultados.
 */
 
+vector<Piloto> cargarPilotos(const string& archivo) {
+    vector<Piloto> pilotos;
+    ifstream file(archivo);
+    
+    if (!file.is_open()) {
+        cout << "Error: No se pudo abrir el archivo " << archivo << endl;
+        return pilotos;
+    }
+    
+    string linea;
+    getline(file, linea);
+    
+    while (getline(file, linea)) {
+        stringstream ss(linea);
+        string nombre, dorsal, hab, prob;
+        
+        getline(ss, nombre, ',');
+        getline(ss, dorsal, ',');
+        getline(ss, hab, ',');
+        getline(ss, prob, ',');
+        
+        pilotos.push_back(Piloto(nombre, dorsal, stoi(hab), stoi(prob)));
+    }
+    
+    file.close();
+    return pilotos;
+}
+
+Piloto* buscarPiloto(vector<Piloto>& pilotos, const string& nombre) {
+    for (auto& p : pilotos) {
+        if (p.getNombre() == nombre) {
+            return &p;
+        }
+    }
+    return nullptr;
+}
 
 void merge(vector<Monoplaza*>& arr, int izquierda, int medio, int derecha) {
     int n1 = medio - izquierda + 1;
@@ -86,78 +108,147 @@ void mergeSort(vector<Monoplaza*>& arr, int izquierda, int derecha) {
     }
 }
 
-
-// La funcion o flujo si se puede llamar asi es el siguiente: 
-// 1. Se inicializan los pilotos con sus atributos.
-// 2. Se crean las escuderías (monoplazas) asignando a cada una un piloto.
-// 3. Se construye la parrilla de salida en un vector.
-// 4. Cada monoplaza ejecuta el método "correr()" para simular su tiempo de carrera.
-// 5. Se ordena la parrilla con MergeSort de menor a mayor tiempo.
-// 6. Se muestran los resultados de la carrera en consola.
-
 int main() {
-
     srand(time(0));
 
-    Piloto verstappen("Max Verstappen", "1", 95, 10);
-    Piloto norris("Lando Norris", "4", 90,7);
-    Piloto bortoleto("Gabriel Bortoleto", "5",82,15);
-    Piloto doohan("Jack Doohan","7",80,15);
-    Piloto gasly("Pierre Gasly","10",85,15);
-    Piloto antonelli("Andrea Kimi Antonelli","12",80,15);
-    Piloto alonso("Fernando Alonso","14",97,17);
-    Piloto leclerc("Charles Leclerc","16",90,12);
-    Piloto stroll("Lance Stroll","18",85,15);
-    Piloto tsunoda("Yuki Tsunoda","22",77,15);
-    Piloto albon("Alexander Albon","23",85,5);
-    Piloto hulkenberg("Nico Hulkenberg","27",80,20);
-    Piloto lawson("Liam Lawson","30",75,20);
-    Piloto ocon("Esteban Ocon","31",84,20);
-    Piloto colapinto("Franco Colanpinto","43",80,20);
-    Piloto hamilton("Lewis Hamilton","44",90,17);
-    Piloto sainz("Carlos Sainz","55",90,15);
-    Piloto russell ("George Russell","63",92,10);
-    Piloto piastri("Osacar Piastri","81",92,6);
-    Piloto bearman("Oliver Bearman","87",80,22);
+    cout << "   SIMULADOR DE CARRERAS DE F1 2025" << endl;
+    cout << endl;
 
-   
-    Sauber sb1(hulkenberg);
-    Sauber sb2(bortoleto);
-    Alpine alp1(gasly);
-    Alpine alp2(colapinto);
-    RB rb1(lawson);
-    RB rb2(doohan);
-    AstonMartin atm1(stroll);
-    AstonMartin atm2(alonso);
-    Ferrari ferr1(leclerc);
-    Ferrari ferr2(hamilton);
-    Haas has1(bearman);
-    Haas has2(ocon);
-    McLaren mcl1(norris);
-    McLaren mcl2(piastri);
-    Mercedes mer1(russell);
-    Mercedes mer2(antonelli);
-    RedBull rbl1(verstappen);
-    RedBull rbl2(tsunoda);
-    Williams will1(albon);
-    Williams will2(sainz);
-
-    vector<Monoplaza*> parrilla = { &sb1, &sb2, &alp1, &alp2, &rb1, &rb2, &atm1, &atm2, &ferr1, &ferr2, &has1, &has2, &mcl1, &mcl2, &mer1, &mer2, &rbl1, &rbl2, &will1, &will2};
-
-    for (auto& m : parrilla) {
-        m->correr();
+    vector<Piloto> pilotos = cargarPilotos("sources/pilotos.csv");    
+    
+    if (pilotos.empty()) {
+        cout << "No se pudieron cargar los pilotos." << endl;
+        return 1;
     }
 
-    mergeSort(parrilla, 0, parrilla.size() - 1);
+    cout << "Pilotos cargados exitosamente: " << pilotos.size() << " pilotos" << endl;
+    cout << endl;
 
+    cout << "PILOTOS DISPONIBLES:" << endl;
+    for (size_t i = 0; i < pilotos.size(); i++) {
+        cout << (i + 1) << ". " << pilotos[i].getNombre() 
+             << " (#" << pilotos[i].getDorsal() << ")"
+             << " - Habilidad: " << pilotos[i].getHabilidad() << endl;
+    }
+    cout << endl;
 
-    cout << "Resultados de la carrera:\n";
-    int count = 1;
-    for (auto& m : parrilla) {
-        cout << count << ".";
-        m->mostrarInfor();
-        count++;
+    // Selección de piloto favorito
+    int opcionPiloto;
+    cout << "Selecciona tu piloto favorito (1-" << pilotos.size() << "): ";
+    cin >> opcionPiloto;
+    
+    while (opcionPiloto < 1 || opcionPiloto > (int)pilotos.size()) {
+        cout << "Opción invalida. Intenta de nuevo (1-" << pilotos.size() << "): ";
+        cin >> opcionPiloto;
     }
     
+    Piloto pilotoFavorito = pilotos[opcionPiloto - 1];
+    cout << "\nSeleccionaste a " << pilotoFavorito.getNombre() << "!" << endl;
+    cout << endl;
+
+    int vueltas;
+    cout << "Ingresa el numero de vueltas para la carrera (1-71): ";
+    cin >> vueltas;
+    
+    while (vueltas < 1 || vueltas > 71) {
+        cout << "Numero inválido. Intenta de nuevo (1-71): ";
+        cin >> vueltas;
+    }
+    
+    cout << "\nConfiguración de carrera:" << endl;
+    cout << "- Vueltas: " << vueltas << endl;
+    cout << "- Piloto favorito: " << pilotoFavorito.getNombre() << endl;
+    cout << endl;
+
+    // Crear todos los monoplazas (usando los pilotos cargados)
+    Piloto* p_verstappen = buscarPiloto(pilotos, "Max Verstappen");
+    Piloto* p_norris = buscarPiloto(pilotos, "Lando Norris");
+    Piloto* p_bortoleto = buscarPiloto(pilotos, "Gabriel Bortoleto");
+    Piloto* p_doohan = buscarPiloto(pilotos, "Jack Doohan");
+    Piloto* p_gasly = buscarPiloto(pilotos, "Pierre Gasly");
+    Piloto* p_antonelli = buscarPiloto(pilotos, "Andrea Kimi Antonelli");
+    Piloto* p_alonso = buscarPiloto(pilotos, "Fernando Alonso");
+    Piloto* p_leclerc = buscarPiloto(pilotos, "Charles Leclerc");
+    Piloto* p_stroll = buscarPiloto(pilotos, "Lance Stroll");
+    Piloto* p_tsunoda = buscarPiloto(pilotos, "Yuki Tsunoda");
+    Piloto* p_albon = buscarPiloto(pilotos, "Alexander Albon");
+    Piloto* p_hulkenberg = buscarPiloto(pilotos, "Nico Hulkenberg");
+    Piloto* p_lawson = buscarPiloto(pilotos, "Liam Lawson");
+    Piloto* p_ocon = buscarPiloto(pilotos, "Esteban Ocon");
+    Piloto* p_colapinto = buscarPiloto(pilotos, "Franco Colapinto");
+    Piloto* p_hamilton = buscarPiloto(pilotos, "Lewis Hamilton");
+    Piloto* p_sainz = buscarPiloto(pilotos, "Carlos Sainz");
+    Piloto* p_russell = buscarPiloto(pilotos, "George Russell");
+    Piloto* p_piastri = buscarPiloto(pilotos, "Oscar Piastri");
+    Piloto* p_bearman = buscarPiloto(pilotos, "Oliver Bearman");
+
+    Sauber sb1(*p_hulkenberg);
+    Sauber sb2(*p_bortoleto);
+    Alpine alp1(*p_gasly);
+    Alpine alp2(*p_colapinto);
+    RB rb1(*p_lawson);
+    RB rb2(*p_doohan);
+    AstonMartin atm1(*p_stroll);
+    AstonMartin atm2(*p_alonso);
+    Ferrari ferr1(*p_leclerc);
+    Ferrari ferr2(*p_hamilton);
+    Haas has1(*p_bearman);
+    Haas has2(*p_ocon);
+    McLaren mcl1(*p_norris);
+    McLaren mcl2(*p_piastri);
+    Mercedes mer1(*p_russell);
+    Mercedes mer2(*p_antonelli);
+    RedBull rbl1(*p_verstappen);
+    RedBull rbl2(*p_tsunoda);
+    Williams will1(*p_albon);
+    Williams will2(*p_sainz);
+
+    // Crear lista doble en lugar de vector
+    ListaDoble parrilla;
+    
+    parrilla.agregar(&sb1);
+    parrilla.agregar(&sb2);
+    parrilla.agregar(&alp1);
+    parrilla.agregar(&alp2);
+    parrilla.agregar(&rb1);
+    parrilla.agregar(&rb2);
+    parrilla.agregar(&atm1);
+    parrilla.agregar(&atm2);
+    parrilla.agregar(&ferr1);
+    parrilla.agregar(&ferr2);
+    parrilla.agregar(&has1);
+    parrilla.agregar(&has2);
+    parrilla.agregar(&mcl1);
+    parrilla.agregar(&mcl2);
+    parrilla.agregar(&mer1);
+    parrilla.agregar(&mer2);
+    parrilla.agregar(&rbl1);
+    parrilla.agregar(&rbl2);
+    parrilla.agregar(&will1);
+    parrilla.agregar(&will2);
+
+    cout << "*Imaginar el semaforo de la carrera*" << endl;
+    cout << "COMIENZA LA CARRERA" << endl;
+    cout << "Simulando " << vueltas << " vueltas..." << endl;
+    cout << endl;
+
+    Nodo* actual = parrilla.getCabeza();
+    while (actual) {
+        actual->monoplaza->correr();
+        actual = actual->siguiente;
+    }
+
+    vector<Monoplaza*> vecTemp = parrilla.toVector();
+    mergeSort(vecTemp, 0, vecTemp.size() - 1);
+    parrilla.actualizarDesdeVector(vecTemp);
+
+    cout << "       RESULTADOS DE LA CARRERA" << endl;
+    cout << endl;
+    
+    parrilla.mostrarTodos();
+    
+    cout << endl;
+    cout << "LA SIMULACION TERMINO" << endl;
+
     return 0;
 }
