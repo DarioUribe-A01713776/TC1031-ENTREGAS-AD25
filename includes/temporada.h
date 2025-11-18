@@ -7,6 +7,7 @@ La clase Temporada representa una temporada completa de Fórmula 1. Gestiona:
 - La parrilla de pilotos y escuderías
 - La simulación de cada carrera
 - La clasificación final usando MaxHeap
+- Guardado de resultados en archivo CSV
 
 El flujo es:
 1. Cargar pilotos, escuderías y pistas desde archivos CSV
@@ -15,6 +16,7 @@ El flujo es:
    - Simular la carrera
    - Actualizar puntos en el MaxHeap
 4. Mostrar clasificación final del campeonato
+5. Guardar resultados en archivo CSV
 */
 
 #ifndef TEMPORADA_H
@@ -60,6 +62,8 @@ public:
     void mostrarClasificacionCampeonato();
     
     void mostrarResumenTemporada();
+    
+    void guardarResultados(const string& archivo);
     
     int getNumeroTemporada() const;
     

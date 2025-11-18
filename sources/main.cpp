@@ -11,7 +11,8 @@ Caracteristicas implementadas:
 4. Sistema de puntos F1 (25, 18, 15, 12, 10, 8, 6, 4, 2, 1)
 5. Clasificacion final usando MaxHeap ordenado por puntos totales
 6. Lista Doblemente Ligada para gestionar parrilla
-7. Merge Sort implicito mediante std::sort para ordenar resultados
+7. Merge Sort para ordenar resultados de cada carrera
+8. Guardado de clasificacion final en archivo CSV
 */
 
 #include <iostream>
@@ -29,15 +30,15 @@ void mostrarMenu() {
     cout << "2. Simular temporada completa" << endl;
     cout << "3. Ver clasificacion actual" << endl;
     cout << "4. Simular carrera individual" << endl;
-    cout << "5. Salir" << endl;
+    cout << "5. Guardar resultados en CSV" << endl;
+    cout << "6. Salir" << endl;
     cout << "========================================" << endl;
     cout << "Selecciona una opcion: ";
 }
 
 int main() {
     cout << "\033[47m\033[31m";
-
-        cout << R"(
+    cout << R"(
   _____ 
  |  ___|
  | |_   
@@ -80,7 +81,6 @@ int main() {
     
     int opcion = 0;
     bool ejecutando = true;
-    int carreraActual = 0;
     
     while (ejecutando) {
         mostrarMenu();
@@ -130,8 +130,13 @@ int main() {
             }
             
             case 5: {
+                cout << "\nGuardando clasificacion final en CSV..." << endl;
+                temporada.guardarResultados("resultados_temporada_2025.csv");
+                break;
+            }
+            
+            case 6: {
                 cout << "\nGracias por usar el simulador de F1 2025!" << endl;
-                cout << "Hasta pronto." << endl;
                 cout << "\033[0m";
                 ejecutando = false;
                 break;
@@ -143,5 +148,6 @@ int main() {
             }
         }
     }
+    
     return 0;
 }

@@ -21,7 +21,7 @@ void Temporada::cargarPilotos(const string& archivo) {
     }
     
     string linea;
-    getline(file, linea);  // Saltar encabezado
+    getline(file, linea);  
     
     while (getline(file, linea)) {
         stringstream ss(linea);
@@ -33,7 +33,6 @@ void Temporada::cargarPilotos(const string& archivo) {
         getline(ss, prob, ',');
         
         pilotos.push_back(Piloto(nombre, dorsal, stoi(hab), stoi(prob)));
-        // Inicializar en el heap con 0 puntos
         clasificacionCampeonato.insertar(NodoHeap(pilotos.back(), 0));
     }
     
@@ -50,7 +49,7 @@ void Temporada::cargarCalendario(const string& archivo) {
     }
     
     string linea;
-    getline(file, linea);  // Saltar encabezado
+    getline(file, linea);  
     
     while (getline(file, linea)) {
         stringstream ss(linea);
@@ -73,7 +72,6 @@ void Temporada::crearParrilla() {
         return;
     }
     
-    // Asociar pilotos con escuderías (simplificado: 2 pilotos por escudería)
     // Red Bull
     parrilla.agregar(new RedBull(pilotos[0]));      // Max Verstappen
     parrilla.agregar(new RedBull(pilotos[17]));     // Yuki Tsunoda
@@ -137,7 +135,6 @@ void Temporada::simularCarrera(int indexCarrera) {
     
     carreras.push_back(carrera);
     
-    // Actualizar clasificación
     actualizarClasificacion(carrera);
 }
 
@@ -148,6 +145,7 @@ void Temporada::actualizarClasificacion(Carrera& carrera) {
     int puntosF1[] = {25, 18, 15, 12, 10, 8, 6, 4, 2, 1};
     
     for (size_t i = 0; i < resultados.size() && i < 10; i++) {
+        
         // Usar getNombrePiloto() para actualizar el heap
         clasificacionCampeonato.actualizarPuntos(
             resultados[i]->getNombrePiloto(),
@@ -208,6 +206,29 @@ void Temporada::mostrarResumenTemporada() {
     cout << "Carreras simuladas: " << carreras.size() << "/" << calendario.size() << endl;
     cout << "Pilotos: " << pilotos.size() << endl;
     cout << endl;
+}
+
+void Temporada::guardarResultados(const string& archivo) {
+    ofstream file(archivo);
+    
+    if (!file.is_open()) {
+        cout << "Error: No se pudo crear el archivo " << archivo << endl;
+        return;
+    }
+    
+    file << "posicion,piloto,dorsal,puntos" << endl;
+    
+    vector<NodoHeap> clasificacionOrdenada = clasificacionCampeonato.getClasificacionOrdenada();
+    
+    for (size_t i = 0; i < clasificacionOrdenada.size(); i++) {
+        file << (i + 1) << ","
+             << clasificacionOrdenada[i].piloto.getNombre() << ","
+             << clasificacionOrdenada[i].piloto.getDorsal() << ","
+             << clasificacionOrdenada[i].puntosTotales << endl;
+    }
+    
+    file.close();
+    cout << "Resultados guardados en: " << archivo << endl;
 }
 
 int Temporada::getNumeroTemporada() const {
