@@ -1,4 +1,4 @@
-// ListaDoble.h
+// listaDoble.h
 // Autor: Darío A. Uribe
 
 /*

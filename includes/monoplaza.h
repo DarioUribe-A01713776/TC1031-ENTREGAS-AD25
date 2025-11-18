@@ -4,7 +4,7 @@
 /*
 En este archivo se define la clase Monoplaza, que representa de forma general
 a un auto de Fórmula 1. La clase incluye atributos como escudería, piloto,
-velocidad, fiabilidad y tiempo de carrera, esta clase la hice para diferencias coches, y hacer la
+velocidad, fiabilidad y tiempo de carrera, esta clase la hice para diferenciar coches, y hacer la
 simulacion mas real, ya que en los monoplazas de la F1 no todos son iguales. 
 
 El atributo piloto proviene de la clase Piloto, lo que permite asociar cada
@@ -33,77 +33,82 @@ protected:
     Piloto piloto;
     int velocidad;
     int fiabilidad;
-    int tiempoCarrera;
 
 public:
+    int tiempoCarrera; 
+    
     Monoplaza(string esc, Piloto pil, int vel, int fiab);
 
-    virtual void correr() = 0;
+    virtual void correr(int vueltas) = 0;
 
     void mostrarInfor();
 
     int getTiempoCarrera() const;
+    
+    string getNombrePiloto() const;
+    
+    string getEscuderia() const;
 };
 
 
 class Sauber : public Monoplaza {
 public:
     Sauber(Piloto pil);
-    void correr() override;
+    void correr(int vueltas) override;
 };
 
 class Alpine : public Monoplaza {
 public:
     Alpine(Piloto pil);
-    void correr() override;
+    void correr(int vueltas) override;
 };
 
 class RB : public Monoplaza {
 public:
     RB(Piloto pil);
-    void correr() override;
+    void correr(int vueltas) override;
 };
 
 class AstonMartin : public Monoplaza {
 public:
     AstonMartin(Piloto pil);
-    void correr() override;
+    void correr(int vueltas) override;
 };
 
 class Ferrari : public Monoplaza {
 public:
     Ferrari(Piloto pil);
-    void correr() override;
+    void correr(int vueltas) override;
 };
 
 class Haas : public Monoplaza {
 public:
     Haas(Piloto pil);
-    void correr() override;
+    void correr(int vueltas) override;
 };
 
 class McLaren : public Monoplaza {
 public:
     McLaren(Piloto pil);
-    void correr() override;
+    void correr(int vueltas) override;
 };
 
 class Mercedes : public Monoplaza {
 public:
     Mercedes(Piloto pil);
-    void correr() override;
+    void correr(int vueltas) override;
 };
 
 class RedBull : public Monoplaza {
 public:
     RedBull(Piloto pil);
-    void correr() override;
+    void correr(int vueltas) override;
 };
 
 class Williams : public Monoplaza {
 public:
     Williams(Piloto pil);
-    void correr() override;
+    void correr(int vueltas) override;
 };
 
 #endif

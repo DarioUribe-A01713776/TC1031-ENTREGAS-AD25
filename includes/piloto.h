@@ -24,12 +24,16 @@ private:
     int probError;
 
 public:
+    Piloto();
+    
     Piloto(string nom, string dor, int hab, int prob);
 
     string getNombre() const;
     string getDorsal() const;
     int getHabilidad() const;
     int getProbError() const;
+    
+    bool operator==(const Piloto& otro) const;
 };
 
 #endif

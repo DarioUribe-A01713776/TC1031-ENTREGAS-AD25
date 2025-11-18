@@ -1,19 +1,19 @@
-// ListaDoble.cpp
+// listaDoble.cpp
 // Autor: Darío A. Uribe
 
-#include "ListaDoble.h"
+#include "listaDoble.h"
 #include <iostream>
 
 using namespace std;
 
 Nodo::Nodo(Monoplaza* m) : monoplaza(m), siguiente(nullptr), anterior(nullptr) {}
+
 ListaDoble::ListaDoble() : cabeza(nullptr), cola(nullptr), tamano(0) {}
 
 void ListaDoble::agregar(Monoplaza* m) {
     Nodo* nuevo = new Nodo(m);
     
     if (!cabeza) {
-        
         cabeza = cola = nuevo;
     } else {
         cola->siguiente = nuevo;
